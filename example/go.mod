@@ -6,7 +6,7 @@ require github.com/pkg/errors v0.9.1 // indirect
 
 require (
 	github.com/dreamph/dbre v1.0.7
-	github.com/dreamph/dbre-adapters/adapters/bun v0.0.0-20241219092609-40735ea4f1f6
+	github.com/dreamph/dbre-adapters/adapters/bun v0.0.0-20241219095223-0e138a4241f2
 	github.com/guregu/null v4.0.0+incompatible
 	github.com/uptrace/bun v1.2.6
 	go.uber.org/zap v1.27.0
