@@ -2,8 +2,6 @@ module github.com/dreamph/dbre/example
 
 go 1.23
 
-require github.com/pkg/errors v0.9.1 // indirect
-
 require (
 	github.com/dreamph/dbre v1.0.8
 	github.com/dreamph/dbre-adapters/adapters/bun v0.0.0-20241219102548-7de842f20b41
@@ -25,6 +23,7 @@ require (
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/mailru/easyjson v0.9.0 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/puzpuzpuz/xsync/v3 v3.4.0 // indirect
 	github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc // indirect
