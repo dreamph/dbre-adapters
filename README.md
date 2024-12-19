@@ -78,13 +78,18 @@ type CountryListCriteria struct {
 package repository
 
 import (
-	"backend/domain"
-	"backend/domain/repomodels"
 	"context"
+
+	"github.com/dreamph/dbre"
+	"github.com/dreamph/dbre-adapters/adapters/bun"
+	"github.com/dreamph/dbre/example/core/utils"
+	"github.com/dreamph/dbre/example/domain"
+	"github.com/dreamph/dbre/example/domain/repomodels"
+	"github.com/dreamph/dbre/query"
 )
 
 type CountryRepository interface {
-	WithTx(db *query.AppIDB) CountryRepository
+	WithTx(db query.AppIDB) CountryRepository
 
 	Create(ctx context.Context, obj *domain.Country) (*domain.Country, error)
 	Update(ctx context.Context, obj *domain.Country) (*domain.Country, error)
@@ -100,13 +105,13 @@ type countryRepository struct {
 	query query.DB[domain.Country]
 }
 
-func NewCountryRepository(db *query.AppIDB) CountryRepository {
+func NewCountryRepository(db query.AppIDB) CountryRepository {
 	return &countryRepository{
 		query: bun.New[domain.Country](db),
 	}
 }
 
-func (r *countryRepository) WithTx(tx *query.AppIDB) CountryRepository {
+func (r *countryRepository) WithTx(tx query.AppIDB) CountryRepository {
 	return NewCountryRepository(tx)
 }
 
@@ -148,15 +153,16 @@ func (r *countryRepository) List(ctx context.Context, obj *repomodels.CountryLis
 		return nil, 0, err
 	}
 	if total > 0 {
-		sortSQL, err := database.SortSQL(&database.SortParam{
+		sortSQL, err := dbre.SortSQL(&dbre.SortParam{
 			SortFieldMapping: map[string]string{
 				"id":     "id",
 				"nameEn": "name_en",
 				"nameTh": "name_th",
 				"code":   "code",
+				"status": "status",
 			},
 			Sort: obj.Sort,
-			DefaultSort: &models.Sort{
+			DefaultSort: &dbre.Sort{
 				SortBy:        "nameEn",
 				SortDirection: "DESC",
 			},
@@ -174,6 +180,7 @@ func (r *countryRepository) List(ctx context.Context, obj *repomodels.CountryLis
 	return result, total, nil
 }
 
+
 ```
 
 
@@ -185,27 +192,34 @@ import (
 	"context"
 	"log"
 
+	"github.com/dreamph/dbre-adapters/adapters/bun"
 	"github.com/dreamph/dbre/example/domain"
 	"github.com/dreamph/dbre/example/repository"
 	"github.com/dreamph/dbre/query"
-	"github.com/dreamph/dbre/query/bun"
+	"go.uber.org/zap"
 )
 
 func main() {
-	bunDB, err := Connect(&Options{
+	logger, err := zap.NewProduction()
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+
+	bunDB, err := bun.Connect(&bun.Options{
 		Host:           "127.0.0.1",
 		Port:           "5432",
 		DBName:         "DB1",
 		User:           "user1",
 		Password:       "password",
 		ConnectTimeout: 2000,
+		Logger:         logger,
 	})
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
-	defer bunDB.Close()
+	defer bun.Close(bunDB)
 
-	appDB := &query.AppIDB{BunDB: bunDB}
+	appDB := bun.NewIDB(bunDB)
 	dbTx := bun.NewDBTx(bunDB)
 
 	ctx := context.Background()
@@ -221,7 +235,7 @@ func main() {
 	}
 
 	// With Transaction
-	err = dbTx.WithTx(ctx, func(ctx context.Context, appDB *query.AppIDB) error {
+	err = dbTx.WithTx(ctx, func(ctx context.Context, appDB query.AppIDB) error {
 		_, err = countryRepository.WithTx(appDB).Create(ctx, &domain.Country{
 			ID:     "1",
 			NameEn: "",
@@ -229,7 +243,7 @@ func main() {
 		if err != nil {
 			return err
 		}
-		
+
 		_, err = countryRepository.WithTx(appDB).Create(ctx, &domain.Country{
 			ID:     "2",
 			NameEn: "",
@@ -237,12 +251,13 @@ func main() {
 		if err != nil {
 			return err
 		}
-		
+
 		return nil
 	})
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
 }
+
 
 ```

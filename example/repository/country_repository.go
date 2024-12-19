@@ -4,14 +4,15 @@ import (
 	"context"
 
 	"github.com/dreamph/dbre"
-	"github.com/dreamph/dbre-adapters/bun"
+	"github.com/dreamph/dbre-adapters/adapters/bun"
+	"github.com/dreamph/dbre/example/core/utils"
 	"github.com/dreamph/dbre/example/domain"
 	"github.com/dreamph/dbre/example/domain/repomodels"
 	"github.com/dreamph/dbre/query"
 )
 
 type CountryRepository interface {
-	WithTx(db *query.AppIDB) CountryRepository
+	WithTx(db query.AppIDB) CountryRepository
 
 	Create(ctx context.Context, obj *domain.Country) (*domain.Country, error)
 	Update(ctx context.Context, obj *domain.Country) (*domain.Country, error)
@@ -27,14 +28,13 @@ type countryRepository struct {
 	query query.DB[domain.Country]
 }
 
-func NewCountryRepository(db *query.AppIDB) CountryRepository {
+func NewCountryRepository(db query.AppIDB) CountryRepository {
 	return &countryRepository{
 		query: bun.New[domain.Country](db),
-		//query: gorm.New[domain.Country](db),
 	}
 }
 
-func (r *countryRepository) WithTx(tx *query.AppIDB) CountryRepository {
+func (r *countryRepository) WithTx(tx query.AppIDB) CountryRepository {
 	return NewCountryRepository(tx)
 }
 
@@ -94,7 +94,7 @@ func (r *countryRepository) List(ctx context.Context, obj *repomodels.CountryLis
 			return nil, 0, err
 		}
 
-		result, err = r.query.ListWhere(ctx, whereCauses, dbre.ToQueryLimit(obj.Limit), []string{sortSQL})
+		result, err = r.query.ListWhere(ctx, whereCauses, utils.ToQueryLimit(obj.Limit), []string{sortSQL})
 		if err != nil {
 			return nil, 0, err
 		}

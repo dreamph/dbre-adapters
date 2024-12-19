@@ -31,7 +31,7 @@ func main() {
 	}
 	defer bun.Close(bunDB)
 
-	appDB := bun.AppIDB{BunDB: bunDB}
+	appDB := bun.NewIDB(bunDB)
 	dbTx := bun.NewDBTx(bunDB)
 
 	ctx := context.Background()
@@ -47,7 +47,7 @@ func main() {
 	}
 
 	// With Transaction
-	err = dbTx.WithTx(ctx, func(ctx context.Context, appDB *query.AppIDB) error {
+	err = dbTx.WithTx(ctx, func(ctx context.Context, appDB query.AppIDB) error {
 		_, err = countryRepository.WithTx(appDB).Create(ctx, &domain.Country{
 			ID:     "1",
 			NameEn: "",
