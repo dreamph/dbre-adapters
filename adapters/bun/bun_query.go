@@ -3,7 +3,7 @@ package bun
 import (
 	"context"
 
-	"github.com/dreamph/dbre-adapters/bun/utils"
+	"github.com/dreamph/dbre-adapters/adapters/bun/utils"
 	"github.com/dreamph/dbre/query"
 	"github.com/uptrace/bun"
 )

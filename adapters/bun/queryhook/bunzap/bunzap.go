@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/dreamph/dbre-adapters/bun/utils"
+	"github.com/dreamph/dbre-adapters/adapters/bun/utils"
 	"github.com/uptrace/bun"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

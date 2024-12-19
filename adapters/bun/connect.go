@@ -5,7 +5,7 @@ import (
 	"database/sql"
 
 	"github.com/dreamph/dbre"
-	"github.com/dreamph/dbre-adapters/bun/queryhook/bunzap"
+	"github.com/dreamph/dbre-adapters/adapters/bun/queryhook/bunzap"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/jackc/pgx/v5/stdlib"

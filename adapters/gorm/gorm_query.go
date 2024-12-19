@@ -4,7 +4,7 @@ import (
 	"context"
 	"strings"
 
-	"github.com/dreamph/dbre-adapters/gorm/utils"
+	"github.com/dreamph/dbre-adapters/adapters/gorm/utils"
 	"github.com/dreamph/dbre/query"
 	"gorm.io/gorm"
 )
