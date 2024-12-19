@@ -5,6 +5,8 @@ import (
 	"log"
 
 	"github.com/dreamph/dbre-adapters/adapters/bun"
+	"github.com/dreamph/dbre-adapters/adapters/bun/connectors/pg"
+
 	"github.com/dreamph/dbre/example/domain"
 	"github.com/dreamph/dbre/example/repository"
 	"github.com/dreamph/dbre/query"
@@ -17,7 +19,7 @@ func main() {
 		log.Fatalf(err.Error())
 	}
 
-	bunDB, err := bun.Connect(&bun.Options{
+	bunDB, err := pg.Connect(&bun.Options{
 		Host:           "127.0.0.1",
 		Port:           "5432",
 		DBName:         "DB1",

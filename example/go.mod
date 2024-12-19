@@ -5,8 +5,8 @@ go 1.23
 require github.com/pkg/errors v0.9.1 // indirect
 
 require (
-	github.com/dreamph/dbre v1.0.7
-	github.com/dreamph/dbre-adapters/adapters/bun v0.0.0-20241219095223-0e138a4241f2
+	github.com/dreamph/dbre v1.0.8
+	github.com/dreamph/dbre-adapters/adapters/bun v0.0.0-20241219102548-7de842f20b41
 	github.com/guregu/null v4.0.0+incompatible
 	github.com/uptrace/bun v1.2.6
 	go.uber.org/zap v1.27.0
