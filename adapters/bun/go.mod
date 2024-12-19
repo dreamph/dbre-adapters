@@ -2,14 +2,10 @@ module github.com/dreamph/dbre-adapters/adapters/bun
 
 go 1.23
 
-require (
-	github.com/jinzhu/now v1.1.5 // indirect
-	github.com/pkg/errors v0.9.1
-	gorm.io/gorm v1.25.12 // indirect
-)
+require github.com/pkg/errors v0.9.1
 
 require (
-	github.com/dreamph/dbre v1.0.6
+	github.com/dreamph/dbre v1.0.7
 	github.com/iancoleman/strcase v0.3.0
 	github.com/jackc/pgx/v5 v5.7.1
 	github.com/uptrace/bun v1.2.6
