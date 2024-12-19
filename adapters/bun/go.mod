@@ -5,7 +5,7 @@ go 1.23
 require github.com/pkg/errors v0.9.1
 
 require (
-	github.com/dreamph/dbre v1.0.7
+	github.com/dreamph/dbre v1.0.8
 	github.com/iancoleman/strcase v0.3.0
 	github.com/jackc/pgx/v5 v5.7.1
 	github.com/uptrace/bun v1.2.6

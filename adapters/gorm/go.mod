@@ -9,7 +9,7 @@ require (
 )
 
 require (
-	github.com/dreamph/dbre v1.0.7
+	github.com/dreamph/dbre v1.0.8
 	go.uber.org/zap v1.27.0
 	gorm.io/driver/postgres v1.5.11
 	moul.io/zapgorm2 v1.3.0
